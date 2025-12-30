@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import RoleModal from "../components/RoleModal";
 
 function Users() {
   const [users, setUsers] = useState([
-    { id: 1, name: "Abdulaziz Ochilov", phone: "+998 97 888 10 27", role: "admin" },
-    { id: 2, name: "Ergashev Islom", phone: "+998 97 888 12 35", role: "yetkazuvchi" },
-    { id: 3, name: "Samidullayev Bahodir", phone: "+998 93 234 10 23", role: "foydalanuvchi" },
+    {
+      id: 1,
+      name: "Abdulaziz Ochilov",
+      phone: "+998 97 888 10 27",
+      role: "admin",
+    },
+    {
+      id: 2,
+      name: "Ergashev Islom",
+      phone: "+998 97 888 12 35",
+      role: "yetkazuvchi",
+    },
+    {
+      id: 3,
+      name: "Samidullayev Bahodir",
+      phone: "+998 93 234 10 23",
+      role: "foydalanuvchi",
+    },
   ]);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
   const openModal = (user) => {
     setSelectedUser(user);
+  };
+  const removeUser = (user) => {
+    setUsers((prev) => prev.filter((el) => el.id !== user.id));
   };
 
   const closeModal = () => {
@@ -21,9 +39,7 @@ function Users() {
 
   const saveRole = (newRole) => {
     setUsers((prev) =>
-      prev.map((u) =>
-        u.id === selectedUser.id ? { ...u, role: newRole } : u
-      )
+      prev.map((u) => (u.id === selectedUser.id ? { ...u, role: newRole } : u))
     );
     closeModal();
   };
@@ -58,7 +74,10 @@ function Users() {
                 >
                   <FaEdit />
                 </button>
-                <button className="btn btn-link text-danger">
+                <button
+                  onClick={() => removeUser(user)}
+                  className="btn btn-link text-danger"
+                >
                   <FaTrash />
                 </button>
               </td>
@@ -68,11 +87,7 @@ function Users() {
       </table>
 
       {selectedUser && (
-        <RoleModal
-          user={selectedUser}
-          onClose={closeModal}
-          onSave={saveRole}
-        />
+        <RoleModal user={selectedUser} onClose={closeModal} onSave={saveRole} />
       )}
     </div>
   );
