@@ -10,7 +10,7 @@ function AdminLayout() {
   return (
     <div className="d-flex vh-100">
       <Sidebar className="position-sticky top-0" />
-      <div className="flex-grow-1 overflow-auto min-vh-100 ">
+      <div className="flex-grow-1 overflow-auto ">
         <Header />
         <main className="p-4">
           <Outlet />
